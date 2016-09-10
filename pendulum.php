@@ -1,26 +1,38 @@
 <?php
+	
+	require_once "forces.php";
 
-	list($b, $w) = array(0.1*0, 1);
-	list($x, $v) = array(3.13, 0.00);
-	list($t, $N, $M) = array(250, 2500, 20000);
+	list($b, $w, $sin) = array(0.05, 1.0, true);
+	list($x, $v, $f, $fw, $fa) = array(1.5, 0.00, "cst", $w, 0.7);
+	list($t, $N, $M) = array(120, 1200, 10000);
 	
 	$N *= $M;
 	$t /= $N;
 	
 	$b += $b;
-	$w *= $w;
+	$W = $w *$w;
+	
+	echo "t|x(t)|v(t)|a(t)|f(t)\n";
 	
 	for($i = 0; $i <= $N; $i++)
 	{
-		$a = - ($b * $v + $w * sin($x));
+		$T = $t * $i;
+		
+		$ff = $f($T, $x, $v, $w, $b, $fw, $fa);
+		
+		if($sin)
+			$a = - ($b * $v + $W * sin($x)) + $ff;
+		else
+			$a = - ($b * $v + $W * $x) + $ff;
 		
 		if($i % $M == 0) {
-			$T = $t * $i;
-			echo "$T|$x|$v|$a\n";
+			echo "$T|$x|$v|$a|$ff\n";
 		}
 		
 		$x += $v * $t;
-		$v += $a * $t;;
+		$v += $a * $t;
 	}
+	
+
 	
 	
