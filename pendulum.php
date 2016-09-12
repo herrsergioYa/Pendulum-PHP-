@@ -2,9 +2,10 @@
 	
 	require_once "forces.php";
 
-	list($b, $w, $sin) = array(0.05, 1.0, true);
-	list($x, $v, $f, $fw, $fa) = array(1.5, 0.00, "cst", $w, 0.7);
-	list($t, $N, $M) = array(120, 1200, 10000);
+	list($theta, $max) = array(1.0, 3.0);
+	list($b, $w, $sin) = array(0.005, 1.0, true);
+	list($x, $v, $f, $fw, $fa) = array($theta *$max, $w * $theta * sqrt(1.0 - $theta * $theta), "zero", $w, 0.0);
+	list($t, $N, $M) = array(30, 3000, 1000);
 	
 	$N *= $M;
 	$t /= $N;
