@@ -1,11 +1,11 @@
 <?php
 	
 	require_once "forces.php";
+	require_once "rets.php";
 
-	list($theta, $max) = array(1.0, 3.0);
-	list($b, $w, $sin) = array(0.005, 1.0, true);
-	list($x, $v, $f, $fw, $fa) = array($theta *$max, $w * $theta * sqrt(1.0 - $theta * $theta), "zero", $w, 0.0);
-	list($t, $N, $M) = array(30, 3000, 1000);
+	list($b, $w, $ret) = array(1.5, 1.0, "sinfi");
+	list($x, $v, $f, $fw, $fa) = array(-1.0, 1.11, "zero", $w, 0.0);
+	list($t, $N, $M) = array(3.0/$b, 3000, 1000);
 	
 	$N *= $M;
 	$t /= $N;
@@ -21,10 +21,7 @@
 		
 		$ff = $f($T, $x, $v, $w, $b, $fw, $fa);
 		
-		if($sin)
-			$a = - ($b * $v + $W * sin($x)) + $ff;
-		else
-			$a = - ($b * $v + $W * $x) + $ff;
+		$a = - ($b * $v + $W * $ret($x)) + $ff;
 		
 		if($i % $M == 0) {
 			echo "$T|$x|$v|$a|$ff\n";
@@ -34,6 +31,6 @@
 		$v += $a * $t;
 	}
 	
-
+	
 	
 	
